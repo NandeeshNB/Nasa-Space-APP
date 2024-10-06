@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Climate Change Effects</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            color: blac;;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            transition: background-color 0.5s ease;
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px;
+            background: rgba(67, 204, 117, 0.2); /* semi-transparent white */
+            backdrop-filter: blur(10px); /* adjust blur intensity as needed */
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            text-shadow: 2px 2px 10px black;
+            margin-bottom: 10px;
+        }
+
+        nav {
+            margin-top: 15px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav a {
+            color: black;
+            text-decoration: none;
+            font-size: 1.2rem;
+            position: relative;
+            padding: 5px 10px;
+            transition: color 0.3s;
+        }
+
+        nav a:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0%;
+            height: 2px;
+            background: #3ea11f;
+            transition: width 0.4s ease, left 0.4s ease;
+            z-index: 0;
+        }
+
+        nav a:hover:before {
+            width: 100%;
+            left: 0;
+        }
+
+        nav a:hover {
+            color: #3ea11f;
+        }
+
+        nav a:hover::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: #3ea11f;
+            bottom: 0;
+            left: 0;
+            transition: transform 0.3s;
+            transform: scaleY(1);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: #3ea11f;
+            bottom: 0;
+            left: 0;
+            transform: scaleY(0);
+            transition: transform 0.3s;
+        }
+
+
+
+        .content-section.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .content-section.inactive {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        
+        /* Main Content */
+        main {
+            padding: 20px;
+        }
+        
+        section {
+            display: none; /* Hide all sections by default */
+            margin-bottom: 40px;
+            background: rgba(30, 30, 30, 0.7);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            transform: translateY(20px);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+
+            /* Adding blur effect */
+            backdrop-filter: blur(5px); /* Adjust the blur radius as needed */
+        }
+
+        /* Optional: If you want the sections to be visible when displayed */
+        section.active {
+            display: block; /* Change display to block when active */
+            opacity: 1; /* Make it fully visible */
+            transform: translateY(0); /* Reset the transform */
+        }
+
+        
+        h2 {
+            color: #3ea11f;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        p {
+            margin: 10px 0;
+            color: #f0f0f0;
+        }
+        
+        li {
+            color: #f0f0f0;
+        }
+        
+        /* Video Styles */
+        .contented {
+            width: 80%;
+            height: auto;
+            border: 5px solid #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+            display: block;
+            margin: 20px auto;
+        }
+        
+        /* Button Styles */
+        .next-button {
+            display: block;
+            margin: 20px auto;
+            padding: 15px 30px;
+            background-color: #3ea11f;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 20px;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .next-button:hover {
+            background-color: green;
+            transform: scale(1.05);
+        }
+        
+        /* Footer Styles */
+        footer {
+            text-align: center;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.85);
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            color: white;
+        }
+        
+        footer p {
+            margin: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        h3 {
+            color: rgb(7, 157, 250);
+        }
+        ul {
+            margin-bottom: 20px;
+        }
+
+        .background {
+            position: fixed; /* Fixes the video in place */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Ensures no overflow */
+            z-index: -1; /* Sends the video behind other content */
+        }
+
+        .background video {
+            width: 100%; /* Ensures the video covers the entire width */
+            height: 100%; /* Ensures the video covers the entire height */
+            object-fit: cover; /* Ensures the video maintains aspect ratio while covering */
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Understanding Climate Change Effects</h1>
+        <nav>
+            <ul>
+                <li><a href="#green-house-gases" onclick="showSection('green-house-gases')">Green House Gases</a></li>
+                <li><a href="#warmer-temperatures" onclick="showSection('warmer-temperatures')">Warmer Temperatures</a></li>
+                <li><a href="#rising-sea-levels" onclick="showSection('rising-sea-levels')">Rising Sea Levels</a></li>
+                <li><a href="#melting-ice-sheets" onclick="showSection('melting-ice-sheets')">Melting Ice Sheets</a></li>
+                <li><a href="#heavy-storms" onclick="showSection('heavy-storms')">Intensive Trophical Storms</a></li>
+                <li><a href="#heavy-rainfall" onclick="showSection('heavy-rainfall')">Heavy Rainfall</a></li>
+                <li><a href="#droughts" onclick="showSection('droughts')">Worsening Droughts</a></li>
+                <li><a href="#wildfires" onclick="showSection('wildfires')">Extreme Wildfires</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="background">
+        <video autoplay muted loop>
+            <source src="856356-hd_1920_1080_25fps.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+
+
+    <main id="main-content">
+        <section id="green-house-gases" style="display: block;">
+            <h2>Green House Gases</h2>
+
+    <h3>Scientific Consensus</h3>
+    <ul>
+        <li>There is overwhelming scientific consensus that greenhouse gases (GHGs) significantly contribute to climate change.</li>
+        <li>Studies indicate that human activities are responsible for over 70% of GHG emissions since the Industrial Revolution.</li>
+    </ul>
+    <h3>Impact</h3>
+    <ul>
+        <li>Rising GHG levels lead to increased global temperatures, affecting weather patterns.</li>
+        <li>Severe weather events, including droughts and floods, are exacerbated by GHG emissions.</li>
+    </ul>
+    <h3>Call to Action</h3>
+    <ul>
+        <li>Transitioning to renewable energy sources is crucial for reducing GHG emissions.</li>
+        <li>Governments must implement strict regulations on emissions and promote sustainable practices.</li>
+    </ul>
+
+            <video class="contented" controls>
+                <source src="ghg.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <button class="next-button" onclick="showSection('warmer-temperatures')">Next</button>
+        </section>
+
+        <section id="warmer-temperatures" style="display: block;">
+            <h2>Warmer Temperatures</h2>
+            <h3>Scientific Consensus</h3>
+            <ul>
+                <li>Global temperatures have increased by approximately 1.2°C since pre-industrial times, according to the IPCC.</li>
+                <li>Heatwaves are becoming more frequent and intense, posing serious health risks.</li>
+            </ul>
+            <h3>Impact</h3>
+            <ul>
+                <li>Warmer temperatures lead to altered ecosystems, affecting biodiversity.</li>
+                <li>Agricultural yields are threatened, impacting food security globally.</li>
+            </ul>
+            <h3>Call to Action</h3>
+            <ul>
+                <li>Investing in climate-resilient agriculture is essential to adapt to changing conditions.</li>
+                <li>Public awareness campaigns should educate communities on heat management strategies.</li>
+            </ul>
+            <video class="contented" controls>
+                <source src="temp.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <video class="contented" controls>
+                <source src="tempdu.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <button class="next-button" onclick="showSection('rising-sea-levels')">Next</button>
+        </section>
+
+        <section id="rising-sea-levels" style="display: block;">
+            <h2>Rising Sea Levels</h2>
+            <h3>Scientific Consensus</h3>
+            <ul>
+                <li>Sea levels have risen by approximately 20 cm since the late 19th century, primarily due to thermal expansion and melting ice sheets, according to the IPCC.</li>
+                <li>The rate of sea-level rise is accelerating, posing significant threats to coastal communities and ecosystems.</li>
+            </ul>
+            <h3>Impact</h3>
+            <ul>
+                <li>Rising sea levels lead to increased flooding, threatening infrastructure and displacing populations.</li>
+                <li>Coastal erosion is exacerbated, impacting habitats and local economies dependent on tourism and fishing.</li>
+            </ul>
+            <h3>Call to Action</h3>
+            <ul>
+                <li>Investing in coastal defenses and sustainable urban planning is crucial to mitigate impacts.</li>
+                <li>Public awareness campaigns should emphasize the importance of protecting coastal ecosystems and promoting community resilience.</li>
+            </ul>
+
+            <video class="contented" controls>
+                <source src="sealevel.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <video class="contented" controls>
+                <source src="sealeveldu.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <button class="next-button" onclick="showSection('melting-ice-sheets')">Next</button>
+        </section>
+
+        <section id="melting-ice-sheets">
+            <h2>Melting Ice Sheets</h2>
+            <h3>Scientific Consensus</h3>
+            <ul>
+                <li>The Arctic ice sheet is melting at an alarming rate, with recent studies indicating a loss of over 2 million square kilometers since 1979.</li>
+                <li>This melting is a direct consequence of rising global temperatures.</li>
+            </ul>
+            <h3>Impact</h3>
+            <ul>
+                <li>Melting ice sheets contribute to rising sea levels, threatening coastal communities.</li>
+                <li>Loss of polar habitats endangers species such as polar bears and seals.</li>
+            </ul>
+            <h3>Call to Action</h3>
+            <ul>
+                <li>International cooperation is essential for effective climate action and mitigation strategies.</li>
+                <li>Investment in research and technology for climate resilience must be prioritized.</li>
+            </ul>
+        
+            <video class="contented" controls>
+                <source src="melt.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <video class="contented" controls>
+                <source src="meltdu.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <button class="next-button" onclick="showSection('heavy-storms')">Next</button>
+        </section>
+
+        <section id="heavy-storms">
+            <h2>Heavy Storms</h2>
+            <h3>Scientific Consensus</h3>
+            <ul>
+                <li>Research indicates that warmer ocean temperatures lead to more intense tropical storms.</li>
+                <li>Storm intensity and frequency have been linked to climate change patterns.</li>
+            </ul>
+            <h3>Impact</h3>
+            <ul>
+                <li>Increased tropical storm intensity results in more destruction of infrastructure.</li>
+                <li>Storms lead to significant economic losses and displacement of communities.</li>
+            </ul>
+            <h3>Call to Action</h3>
+            <ul>
+                <li>Emergency preparedness plans must be enhanced to protect vulnerable communities.</li>
+                <li>Investing in resilient infrastructure can mitigate the impacts of tropical storms.</li>
+            </ul>
+            <video class="contented" controls>
+                <source src="storm.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <video class="contented" controls>
+                <source src="stormdu.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <button class="next-button" onclick="showSection('heavy-rainfall')">Next</button>
+
+        </section>
+
+        <section id="heavy-rainfall">
+            <h2>Heavy Rainfall</h2>
+            <h2>3. Heavier Rainfall</h2>
+    <h3>Scientific Consensus</h3>
+    <ul>
+        <li>Climate models predict an increase in the intensity of rainfall events due to climate change.</li>
+        <li>Heavy rainfall can lead to devastating floods and associated damages.</li>
+    </ul>
+    <h3>Impact</h3>
+    <ul>
+        <li>Flooding disrupts infrastructure, leads to loss of life, and impacts livelihoods.</li>
+        <li>Soil erosion and water contamination are significant concerns in flood-prone areas.</li>
+    </ul>
+    <h3>Call to Action</h3>
+    <ul>
+        <li>Governments must invest in adaptive infrastructure to mitigate flood risks.</li>
+        <li>Enhanced forecasting and early warning systems are crucial for disaster preparedness.</li>
+    </ul>
+
+            <video class="contented" controls>
+                <source src="rainfall.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <video class="contented" controls>
+                <source src="rainfalldu.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <button class="next-button" onclick="showSection('droughts')">Next</button>
+
+        </section>
+
+        <section id="droughts">
+            <h2>Worsening Droughts</h2>
+    <h3>Scientific Consensus</h3>
+    <ul>
+        <li>Drought frequency and severity are increasing due to climate change.</li>
+        <li>Studies show that arid regions are becoming drier, affecting water availability.</li>
+    </ul>
+    <h3>Impact</h3>
+    <ul>
+        <li>Water scarcity impacts agriculture, threatening food security and livelihoods.</li>
+        <li>Droughts exacerbate competition for water resources, leading to conflicts.</li>
+    </ul>
+    <h3>Call to Action</h3>
+    <ul>
+        <li>Implementing sustainable water management practices is critical for resilience.</li>
+        <li>Investing in drought-resistant crops can enhance agricultural adaptability.</li>
+    </ul>
+            <video class="contented" controls>
+                <source src="droughts.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <video class="contented" controls>
+                <source src="droughtsdu.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <button class="next-button" onclick="showSection('wildfires')">Next</button>
+        </section>
+
+        <section id="wildfires">
+            <h2>Extreme Wildfires</h2>
+            <h3>Scientific Consensus</h3>
+            <ul>
+                <li>Climate change is contributing to longer and more severe wildfire seasons.</li>
+                <li>Increased temperatures and prolonged drought conditions are primary drivers.</li>
+            </ul>
+            <h3>Impact</h3>
+            <ul>
+                <li>Wildfires devastate ecosystems and biodiversity, leading to habitat loss.</li>
+                <li>Air quality deterioration due to smoke poses serious health risks to communities.</li>
+            </ul>
+            <h3>Call to Action</h3>
+            <ul>
+                <li>Fire management strategies must integrate climate adaptation measures.</li>
+                <li>Public education campaigns on fire safety and prevention are essential.</li>
+            </ul>
+            <video class="contented" controls>
+                <source src="wildfire.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <video class="contented" controls>
+                <source src="wildfiredu.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <button class="next-button" onclick="showSection('green-house-gases')">Next</button>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Understanding Climate Change Effects</p>
+    </footer>
+
+    <script>
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('main > section');
+            sections.forEach(section => {
+                section.style.display = 'none'; // Hide all sections
+            });
+
+            const activeSection = document.getElementById(sectionId);
+            if (activeSection) {
+                activeSection.style.display = 'block'; // Show the selected section
+            }
+
+            // Scroll to the top of the page
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Initialize by showing the first section
+        showSection('green-house-gases');
+    </script>
+</body>
+</html>
